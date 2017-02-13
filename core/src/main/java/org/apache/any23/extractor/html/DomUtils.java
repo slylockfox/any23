@@ -526,17 +526,21 @@ public class DomUtils {
         Result outputTarget = new StreamResult(outputStream);
         Transformer t = null;
         try {
-          t = TransformerFactory.newInstance().newTransformer();
+            t = TransformerFactory.newInstance().newTransformer();
         } catch (TransformerConfigurationException e) {
-          e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException("Error within node to InputStream transformation configuration!");
         } catch (TransformerFactoryConfigurationError e) {
-          e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException("Error within node to InputStream transformation configuration (factory)!");
         }
-        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        try {
-          t.transform(new DOMSource(node), outputTarget);
-        } catch (TransformerException e) {
-          e.printStackTrace();
+        if (t != null) {
+            t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            try {
+                t.transform(new DOMSource(node), outputTarget);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
         }
         return new ByteArrayInputStream(outputStream.toByteArray());
     }

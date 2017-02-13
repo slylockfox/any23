@@ -33,11 +33,26 @@ public class EmbeddedJSONLDExtractorTest extends AbstractExtractorTestCase {
 	}
 
 	@Test
+	public void testEmbeddedJSONLDInHead2() throws Exception {
+		assertExtract("/html/html-embedded-jsonld-extractor2.html");
+		assertModelNotEmpty();
+		assertStatementsSize(null, null, null, 5);
+	}
+
+	@Test
+	public void testEmbeddedJSONLDInHead3() throws Exception {
+		assertExtract("/html/html-embedded-jsonld-extractor3.html");
+		assertModelNotEmpty();
+		assertStatementsSize(null, null, null, 5);
+	}
+
+	@Test
 	public void testSeveralEmbeddedJSONLDInHead() throws Exception {
 		assertExtract("/html/html-embedded-jsonld-extractor-multiple.html");
 		assertModelNotEmpty();
 		assertStatementsSize(null, null, null, 7);
 	}
+
 
 	@Override
 	protected ExtractorFactory<?> getExtractorFactory() {
